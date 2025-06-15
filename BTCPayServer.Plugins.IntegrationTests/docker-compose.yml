@@ -125,7 +125,7 @@ services:
       start_period: 2s
 
   xmr_wallet_init:
-    image: curlimages/curl:latest
+    image: alpine:latest
     container_name: xmr_wallet_init
     depends_on:
       xmr_wallet:
