@@ -133,7 +133,7 @@ services:
     command: |
       sh -c ' # Create/Open a wallet with one account label
         curl -v -X POST http://xmr_wallet:18082/json_rpc \
-          -d "{\"jsonrpc\":\"2.0\",\"id\":\"0\",\"method\":\"create_wallet\",\"params\":{\"filename\":\"xnr_wallet_init\",\"password\":\"\",\"language\":\"English\"}}" \
+          -d "{\"jsonrpc\":\"2.0\",\"id\":\"0\",\"method\":\"create_wallet\",\"params\":{\"filename\":\"xmr_wallet_init\",\"password\":\"\",\"language\":\"English\"}}" \
           -H "Content-Type: application/json"
         curl -v -X POST http://xmr_wallet:18082/json_rpc \
           -d "{\"jsonrpc\":\"2.0\",\"id\":\"0\",\"method\":\"open_wallet\",\"params\":{\"filename\":\"xmr_wallet_init\",\"password\":\"\"}}" \
