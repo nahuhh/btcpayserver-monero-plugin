@@ -135,12 +135,12 @@ services:
       xmr_wallet:
         condition: service_healthy
     command: |
-      # Create/Open a wallet with one account label
-      sh -c "send_req() {
-        curl -v -X POST http://xmr_wallet:18082/json_rpc \
-          -d '{"jsonrpc":"2.0","id":"0","method":"'"$METHOD"'","params":'"$PARAMS"'}' \
-          -H "Content-Type: application/json"
-      }
+      sh -c " # Create/Open a wallet with one account label
+        send_req() {
+          curl -v -X POST http://xmr_wallet:18082/json_rpc \
+            -d '{"jsonrpc":"2.0","id":"0","method":"'"$METHOD"'","params":'"$PARAMS"'}' \
+            -H "Content-Type: application/json"
+        }
 
         METHOD="create_wallet"
         PARAMS='{"filename":"xmr_wallet_init","password":"","language":"English"}'
