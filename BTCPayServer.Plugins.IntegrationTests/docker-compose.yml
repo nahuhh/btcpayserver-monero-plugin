@@ -125,30 +125,32 @@ services:
       start_period: 2s
 
   xmr_wallet_init:
-    image: alpine:latest
+    image: curlimages/curl:latest
     container_name: xmr_wallet_init
     depends_on:
       xmr_wallet:
         condition: service_healthy
     command: |
       # Create/Open a wallet with one account label
-      send_req() {
-        curl -v -X POST http://xmr_wallet:18082/json_rpc \
-          -d '{"jsonrpc":"2.0","id":"0","method":"'"$METHOD"'","params":'"$PARAMS"'}' \
-          -H "Content-Type: application/json"
-      }
+      bash -c "
+        send_req() {
+          curl -v -X POST http://xmr_wallet:18082/json_rpc \
+            -d '{"jsonrpc":"2.0","id":"0","method":"'"$METHOD"'","params":'"$PARAMS"'}' \
+            -H "Content-Type: application/json"
+        }
 
-      METHOD="create_wallet"
-      PARAMS='{"filename":"xmr_wallet_init","password":"","language":"English"}'
-      send_req || exit 1
+        METHOD="create_wallet"
+        PARAMS='{"filename":"xmr_wallet_init","password":"","language":"English"}'
+        send_req || exit 1
 
-      METHOD="open_wallet"
-      PARAMS='{"filename":"xmr_wallet_init","password":""}'
-      send_req || exit 1
+        METHOD="open_wallet"
+        PARAMS='{"filename":"xmr_wallet_init","password":""}'
+        send_req || exit 1
 
-      METHOD="create_account"
-      PARAMS='{"label":"Test Account"}'
-      send_req || exit 1
+        METHOD="create_account"
+        PARAMS='{"label":"Test Account"}'
+        send_req || exit 1
+      "
 
   xmr_cashcow_wallet:
     image: btcpayserver/monero:0.18.3.4
