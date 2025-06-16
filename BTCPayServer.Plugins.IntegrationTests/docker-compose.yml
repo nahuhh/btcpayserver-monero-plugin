@@ -1,5 +1,4 @@
 services:
-  
   tests:
     build:
       context: ..
@@ -14,9 +13,9 @@ services:
       BTCPAY_XMR_DAEMON_URI: http://monerod:18081
       BTCPAY_XMR_WALLET_DAEMON_URI: http://xmr_wallet:18082
     depends_on:
-      nbxplorer: 
+      nbxplorer:
         condition: service_started
-      postgres: 
+      postgres:
         condition: service_started
       xmr_wallet:
         condition: service_healthy
@@ -31,7 +30,12 @@ services:
   dev:
     image: alpine:3.21
     container_name: dev
-    command: [ "/bin/sh", "-c", "trap : TERM INT; while :; do echo Ready to code and debug like a rockstar!!!; sleep 2073600; done & wait" ]
+    command:
+      [
+        "/bin/sh",
+        "-c",
+        "trap : TERM INT; while :; do echo Ready to code and debug like a rockstar!!!; sleep 2073600; done & wait",
+      ]
     depends_on:
       - nbxplorer
       - postgres
@@ -132,7 +136,7 @@ services:
         condition: service_healthy
     command: |
       # Create/Open a wallet with one account label
-      bash -c "
+      sh -c "
         send_req() {
           curl -v -X POST http://xmr_wallet:18082/json_rpc \
             -d '{"jsonrpc":"2.0","id":"0","method":"'"$METHOD"'","params":'"$PARAMS"'}' \
