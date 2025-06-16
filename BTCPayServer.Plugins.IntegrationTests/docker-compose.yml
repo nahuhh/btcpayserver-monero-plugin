@@ -138,20 +138,20 @@ services:
       sh -c " # Create/Open a wallet with one account label
         send_req() {
           curl -v -X POST http://xmr_wallet:18082/json_rpc \
-            -d '{"jsonrpc":"2.0","id":"0","method":"'"$METHOD"'","params":'"$PARAMS"'}' \
+            -d '{\"jsonrpc\":\"2.0\",\"id\":\"0\",\"method\":\"'\"$METHOD\"'\",\"params\":'\"$PARAMS\"'}' \
             -H \"Content-Type: application/json\"
         }
 
         METHOD='create_wallet'
-        PARAMS='{"filename":"xmr_wallet_init","password":"","language":"English"}'
+        PARAMS='{\"filename\":\"xmr_wallet_init\",\"password\":\"\",\"language\":\"English\"}'
         send_req || exit 1
 
         METHOD='open_wallet'
-        PARAMS='{"filename":"xmr_wallet_init","password":""}'
+        PARAMS='{\"filename\":\"xmr_wallet_init\",\"password\":\"\"}'
         send_req || exit 1
 
         METHOD='create_account'
-        PARAMS='{"label":"Test Account"}'
+        PARAMS='{\"label\":\"Test Account\"}'
         send_req || exit 1
       "
 
